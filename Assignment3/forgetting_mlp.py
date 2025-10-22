@@ -234,7 +234,7 @@ ACC_drop0, BWT_drop0, R_drop0 = run_variant(DEPTH, 0.0, "adam", "nll", 0.0, 0.0)
 results.append(("Task E.1", DEPTH, 0.0, "adam", "nll", 0.0, 0.0, ACC_drop0, BWT_drop0, R_drop0))
 
 # Print a compact table
-print("\n=== Summary (copy to report) ===")
+print("\n=== Summary ===")
 print("Configuration | Depth | Dropout | Optimizer | Loss | ACC | BWT")
 for tag, d, drop, optn, lossn, l1v, l2v, accv, bwtv, _ in results:
     print(f"{tag:11s} | {d:5d} | {drop:7.2f} | {optn:9s} | {lossn:6s} | {accv:.4f} | {bwtv:.4f}")
