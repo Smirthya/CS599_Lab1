@@ -213,31 +213,31 @@ results = []
 results.append(("Task A (Baseline)", DEPTH, DROPOUT_RATE, OPT_NAME, LOSS_NAME, L1, L2, float(ACC), float(BWT), R))
 
 # Loss ablation (keep depth=3, dropout=0.5, optimizer=adam)
-print("\n=== Loss Ablation ===")
-ACC_l1, BWT_l1, R_l1 = run_variant(DEPTH, DROPOUT_RATE, "adam", "l1", 1e-5, 0.0)
-ACC_l2, BWT_l2, R_l2 = run_variant(DEPTH, DROPOUT_RATE, "adam", "l2", 0.0, 1e-4)
-ACC_l12, BWT_l12, R_l12 = run_variant(DEPTH, DROPOUT_RATE, "adam", "l1+l2", 1e-5, 1e-4)
-results.append(("Loss ablation L1", DEPTH, DROPOUT_RATE, "adam", "l1", 1e-5, 0.0, ACC_l1, BWT_l1, R_l1))
-results.append(("Loss ablation L2", DEPTH, DROPOUT_RATE, "adam", "l2", 0.0, 1e-4, ACC_l2, BWT_l2, R_l2))
-results.append(("Loss ablation L1 & L2", DEPTH, DROPOUT_RATE, "adam", "l1+l2", 1e-5, 1e-4, ACC_l12, BWT_l12, R_l12))
+# print("\n=== Loss Ablation ===")
+# ACC_l1, BWT_l1, R_l1 = run_variant(DEPTH, DROPOUT_RATE, "adam", "l1", 1e-5, 0.0)
+# ACC_l2, BWT_l2, R_l2 = run_variant(DEPTH, DROPOUT_RATE, "adam", "l2", 0.0, 1e-4)
+# ACC_l12, BWT_l12, R_l12 = run_variant(DEPTH, DROPOUT_RATE, "adam", "l1+l2", 1e-5, 1e-4)
+# results.append(("Loss ablation L1", DEPTH, DROPOUT_RATE, "adam", "l1", 1e-5, 0.0, ACC_l1, BWT_l1, R_l1))
+# results.append(("Loss ablation L2", DEPTH, DROPOUT_RATE, "adam", "l2", 0.0, 1e-4, ACC_l2, BWT_l2, R_l2))
+# results.append(("Loss ablation L1 & L2", DEPTH, DROPOUT_RATE, "adam", "l1+l2", 1e-5, 1e-4, ACC_l12, BWT_l12, R_l12))
 
 # Optimizer ablation (keep depth=3, dropout=0.5, loss=nll)
-print("\n=== Optimizer Ablation ===")
-ACC_sgd, BWT_sgd, R_sgd = run_variant(DEPTH, DROPOUT_RATE, "sgd", "nll", 0.0, 0.0)
-ACC_rms, BWT_rms, R_rms = run_variant(DEPTH, DROPOUT_RATE, "rmsprop", "nll", 0.0, 0.0)
-results.append(("SGD", DEPTH, DROPOUT_RATE, "sgd", "nll", 0.0, 0.0, ACC_sgd, BWT_sgd, R_sgd))
-results.append(("RMSprop", DEPTH, DROPOUT_RATE, "rmsprop", "nll", 0.0, 0.0, ACC_rms, BWT_rms, R_rms))
+# print("\n=== Optimizer Ablation ===")
+# ACC_sgd, BWT_sgd, R_sgd = run_variant(DEPTH, DROPOUT_RATE, "sgd", "nll", 0.0, 0.0)
+# ACC_rms, BWT_rms, R_rms = run_variant(DEPTH, DROPOUT_RATE, "rmsprop", "nll", 0.0, 0.0)
+# results.append(("SGD", DEPTH, DROPOUT_RATE, "sgd", "nll", 0.0, 0.0, ACC_sgd, BWT_sgd, R_sgd))
+# results.append(("RMSprop", DEPTH, DROPOUT_RATE, "rmsprop", "nll", 0.0, 0.0, ACC_rms, BWT_rms, R_rms))
 
 # Dropout ablation (keep depth=3, opt=adam, loss=nll)
-print("\n=== Dropout Ablation ===")
-ACC_drop0, BWT_drop0, R_drop0 = run_variant(DEPTH, 0.0, "adam", "nll", 0.0, 0.0)
-results.append(("Dropout ablation", DEPTH, 0.0, "adam", "nll", 0.0, 0.0, ACC_drop0, BWT_drop0, R_drop0))
+# print("\n=== Dropout Ablation ===")
+# ACC_drop0, BWT_drop0, R_drop0 = run_variant(DEPTH, 0.0, "adam", "nll", 0.0, 0.0)
+# results.append(("Dropout ablation", DEPTH, 0.0, "adam", "nll", 0.0, 0.0, ACC_drop0, BWT_drop0, R_drop0))
 
 # Print a compact table
-print("\n=== Summary ===")
-print("Configuration | Depth | Dropout | Optimizer | Loss | ACC | BWT")
-for tag, d, drop, optn, lossn, l1v, l2v, accv, bwtv, _ in results:
-    print(f"{tag:11s} | {d:5d} | {drop:7.2f} | {optn:9s} | {lossn:6s} | {accv:.4f} | {bwtv:.4f}")
+# print("\n=== Summary ===")
+# print("Configuration | Depth | Dropout | Optimizer | Loss | ACC | BWT")
+# for tag, d, drop, optn, lossn, l1v, l2v, accv, bwtv, _ in results:
+#     print(f"{tag:11s} | {d:5d} | {drop:7.2f} | {optn:9s} | {lossn:6s} | {accv:.4f} | {bwtv:.4f}")
 
 # Save the required plot: last row of baseline R
 
@@ -254,16 +254,16 @@ try:
     print("Saved plot: lastrow_baseline.png")
 
     # baseline vs dropout=0.0
-    plt.figure()
-    plt.plot(range(1, num_tasks_to_run+1), R[-1], marker='o', label='dropout=0.5')
-    plt.plot(range(1, num_tasks_to_run+1), R_drop0[-1], marker='s', label='dropout=0.0')
-    plt.xlabel("Task index (1..10)")
-    plt.ylabel("Accuracy after training all 10 tasks")
-    plt.title("Baseline vs No Dropout (last row of R)")
-    plt.legend()
-    plt.grid(True)
-    plt.tight_layout()
-    plt.savefig("lastrow_baseline_vs_drop0.png", dpi=150)
-    print("Saved plot: lastrow_baseline_vs_drop0.png")
+    # plt.figure()
+    # plt.plot(range(1, num_tasks_to_run+1), R[-1], marker='o', label='dropout=0.5')
+    # plt.plot(range(1, num_tasks_to_run+1), R_drop0[-1], marker='s', label='dropout=0.0')
+    # plt.xlabel("Task index (1..10)")
+    # plt.ylabel("Accuracy after training all 10 tasks")
+    # plt.title("Baseline vs No Dropout (last row of R)")
+    # plt.legend()
+    # plt.grid(True)
+    # plt.tight_layout()
+    # plt.savefig("lastrow_baseline_vs_drop0.png", dpi=150)
+    # print("Saved plot: lastrow_baseline_vs_drop0.png")
 except Exception as e:
     print("Plotting skipped:", e)
